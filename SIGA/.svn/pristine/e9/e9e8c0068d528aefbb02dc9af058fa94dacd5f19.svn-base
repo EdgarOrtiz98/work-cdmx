@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Untitled_report_2" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="79be2e05-198a-445d-94e9-a9add226e896">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<parameter name="fechaInicial" class="java.lang.String"/>
+	<parameter name="fechaFinal" class="java.lang.String"/>
+	<parameter name="tipoUsuario" class="java.lang.String"/>
+	<parameter name="sexo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT COUNT(USUARIOSPORCENTAJE.IDUSUARIO) AS CONTADOR,
+    (SELECT COUNT(USUARIOS.IDUSUARIO)
+        FROM (((TUSUARIOS USUARIOS INNER JOIN TUSUARIOINSCRITO USUARIOINSCRITO
+        ON USUARIOS.IDUSUARIO = USUARIOINSCRITO.IDUSUARIO) INNER JOIN TINSCRIPCION INSCRIPCION
+        ON USUARIOINSCRITO.IDINSCRIPCION = INSCRIPCION.IDINSCRIPCION) INNER JOIN CTIPOUSUARIO TIPOUSUARIO
+        ON TIPOUSUARIO.IDTIPOUSUARIO = USUARIOS.IDTIPOUSUARIO) INNER JOIN CSEXO SEXO
+        ON SEXO.IDSEXO = USUARIOS.IDSEXO
+        AND INSCRIPCION.IDESTATUSINSCRIPCION = 1
+        AND INSCRIPCION.IDESTATUSREGISTRO = 1
+        AND INSCRIPCION.FECINSCRIPCION BETWEEN TO_DATE($P{fechaInicial}, 'DD/MM/YYYY') AND TO_DATE($P{fechaFinal}, 'DD/MM/YYYY')
+        AND TIPOUSUARIO.IDTIPOUSUARIO LIKE $P{tipoUsuario}
+        AND SEXO.IDSEXO LIKE $P{sexo}) AS NTOTAL
+FROM (((((TUSUARIOS USUARIOSPORCENTAJE INNER JOIN TUSUARIOINSCRITO USUARIOINSCRITOPORCENTAJE
+ON USUARIOSPORCENTAJE.IDUSUARIO = USUARIOINSCRITOPORCENTAJE.IDUSUARIO) INNER JOIN TINSCRIPCION INSCRIPCIONPORCENTAJE
+ON USUARIOINSCRITOPORCENTAJE.IDINSCRIPCION = INSCRIPCIONPORCENTAJE.IDINSCRIPCION) INNER JOIN TFOLIO_FAMILIA FOLIOFAMILIARPORCENTAJE
+ON FOLIOFAMILIARPORCENTAJE.IDUSUARIO = USUARIOSPORCENTAJE.IDUSUARIO) INNER JOIN TFOLIO FOLIOPORCENTAJE
+ON FOLIOPORCENTAJE.IDFOLIO = FOLIOFAMILIARPORCENTAJE.IDFOLIO) INNER JOIN CTIPOUSUARIO TIPOUSUARIOPORCENTAJE
+ON TIPOUSUARIOPORCENTAJE.IDTIPOUSUARIO = USUARIOSPORCENTAJE.IDTIPOUSUARIO) INNER JOIN CSEXO SEXOPROCENTAJE
+ON SEXOPROCENTAJE.IDSEXO = USUARIOSPORCENTAJE.IDSEXO
+AND INSCRIPCIONPORCENTAJE.IDESTATUSINSCRIPCION = 1
+AND INSCRIPCIONPORCENTAJE.IDESTATUSREGISTRO = 1
+AND INSCRIPCIONPORCENTAJE.FECINSCRIPCION BETWEEN TO_DATE($P{fechaInicial}, 'DD/MM/YYYY') AND TO_DATE($P{fechaFinal}, 'DD/MM/YYYY')
+AND TIPOUSUARIOPORCENTAJE.IDTIPOUSUARIO LIKE $P{tipoUsuario}
+AND SEXOPROCENTAJE.IDSEXO LIKE $P{sexo}
+GROUP BY 1, 2]]>
+	</queryString>
+	<field name="CONTADOR" class="java.math.BigDecimal"/>
+	<field name="NTOTAL" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="###" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="0" y="0" width="40" height="16" uuid="9df896fe-8ea3-4de3-9f88-0779a69a0a8e"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.lang.Float((($F{CONTADOR}.intValue()) * (100)) / ($F{NTOTAL}.intValue()) )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" x="40" y="0" width="15" height="16" uuid="23603fce-7836-473e-baec-c22c59744e82"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

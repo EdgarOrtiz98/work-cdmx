@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wls:weblogic-application xmlns:wls="http://xmlns.oracle.com/weblogic/weblogic-application" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/javaee_5.xsd http://xmlns.oracle.com/weblogic/weblogic-application http://xmlns.oracle.com/weblogic/weblogic-application/1.4/weblogic-application.xsd">
+    <wls:security>
+        <wls:security-role-assignment>
+            <wls:role-name>AUTH_USERS</wls:role-name>
+            <wls:principal-name>testadmin</wls:principal-name>
+            <wls:principal-name>sergio_niz1</wls:principal-name>
+            <wls:principal-name>hugo_calcaneo</wls:principal-name>
+            <wls:principal-name>evelia_antonio</wls:principal-name>
+            <wls:principal-name>oscar_guzman</wls:principal-name>
+        </wls:security-role-assignment>
+    </wls:security>
+    <!--weblogic-version:14.1.1.0-->
+    <wls:application-param>
+        <wls:param-name>webapp.encoding.default</wls:param-name>
+        <wls:param-value>UTF-8</wls:param-value>
+    </wls:application-param>
+    <wls:module>
+        <wls:name>siga-jdbc</wls:name>
+        <wls:type>JDBC</wls:type>
+        <wls:path>META-INF/jdbc/siga-jdbc.xml</wls:path>
+    </wls:module>
+    <wls:module>
+        <wls:name>sigaDocs-jdbc</wls:name>
+        <wls:type>JDBC</wls:type>
+        <wls:path>META-INF/jdbc/sigaDocs-jdbc.xml</wls:path>
+    </wls:module>
+</wls:weblogic-application>

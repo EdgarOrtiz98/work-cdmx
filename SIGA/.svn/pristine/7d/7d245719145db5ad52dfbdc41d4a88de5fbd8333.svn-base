@@ -1,0 +1,266 @@
+/*	--------------------------------------------------------------------
+    DatePicker Styles
+    -------------------------------------------------------------------- */
+
+.s-pagetitlebar-bg {
+	background-color: white;
+}
+
+.s-datePick-DateNav {
+	width:140px;
+	cursor:default;
+	background-color: #d6d6b6;
+}
+
+.s-dateNav-hr {
+	color:#ffffe3;
+}
+
+td.s-dateNav-Day {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:medium;
+	font-weight:bold;
+	color:black;
+	text-align:center;
+	cursor:hand}
+
+td.s-dateNav-Desc {
+	font-family:Verdana, Arial, Helvetica;
+	font-size:xx-small;
+	font-weight:normal;
+	color:black;
+	text-align:left;
+	cursor:hand}
+
+
+.s-datePick-DateCtl {
+	visibility:hidden; 
+	position:absolute;
+	overflow:visible;
+	z-index:9;
+	background-image:url(../Imagenes/fondo_claro.jpg);
+	border-color:black;
+	width:112px;
+	height:80px;
+	cursor:default;
+}
+
+td.s-datePick-Hdg-text {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:xx-small;
+	font-weight:normal;
+	color:black;
+	text-align:center;
+	cursor:default;
+}
+
+td.s-datePick-Hdg-text-ns {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:small;
+	font-weight:normal;
+	color:black;
+	text-align:center;
+	cursor:default;
+}
+
+.s-datePick-Arrow {
+	cursor:hand;
+	width:9px;
+	height:9px;
+	border:0px;
+}
+
+td.s-datePick-WeekDay-text {
+	font-family:Verdana, Arial, Helvetica;
+	font-size:xx-small;
+	font-weight:normal;
+	color:black;
+	text-align:center;
+	width:14%;
+	vertical-align:middle;
+}
+
+td.s-datePick-WeekDay-text-ns {
+	font-family:Verdana, Arial, Helvetica;
+	font-size: small;
+	color:black;
+	text-align:center;
+	text-decoration: none;
+	width:14%;
+	vertical-align:middle;
+}
+
+A{
+	text-decoration:none;
+	cursor:hand;
+	color:black;
+}
+
+a.s-datePick-Today, td.s-datePick-Today {
+	background-color:white;
+	font-family:Verdana, Arial, Helvetica;
+	font-size:xx-small;
+	font-weight:normal;
+	color:black;
+	text-align:center;
+	cursor:hand
+}
+
+a.s-datePick-CurrDay, td.s-datePick-CurrDay {
+	background-color:black;
+	font-family:Verdana, Arial, Helvetica;
+	font-size:xx-small;
+	font-weight:bold;
+	color:white;
+	text-align:center;
+	cursor:hand;
+}
+
+
+a.s-datePick-Today-ns, td.s-datePick-Today-ns {
+	background-color:white;
+	font-family:Verdana, Arial, Helvetica;
+	font-size:small;
+	font-weight:normal;
+	text-decoration: none;
+	color:black;
+	text-align:center;
+	cursor:hand
+}
+
+a.s-datePick-CurrDay-ns, td.s-datePick-CurrDay-ns {
+	background-color: #FFDAB9;
+	font-family:Verdana, Arial, Helvetica;
+	font-size:small;
+	font-weight:bold;
+	text-decoration: none;
+	color: "#425024";
+	text-align:center;
+	cursor:hand;
+}
+
+
+
+a.s-datePick-CurrMonth, td.s-datePick-CurrMonth {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:xx-small;
+	font-weight:normal;
+	color:#003366;
+	text-align:center;
+	cursor:hand;
+	vertical-align:middle;
+}
+
+a.s-datePick-CurrMonth-ns, td.s-datePick-CurrMonth-ns {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:small;
+	font-weight:normal;
+	color: Black;
+	text-align:center;
+	text-decoration: none;
+	cursor:hand;
+	vertical-align:middle;
+}
+
+a.s-datePick-OtherMonth, td.s-datePick-OtherMonth {
+	font-family:Verdana, Arial, Helvetica;
+	font-size:xx-small;
+	font-weight:normal;
+	color:#eeeeee;
+	text-align:center;
+	cursor:hand
+}
+
+
+a.s-datePick-OtherMonth-ns, td.s-datePick-OtherMonth-ns {
+	font-family:Verdana, Arial, Helvetica;
+	font-size: small;
+	font-weight:normal;
+	textcolor:#425024;
+	text-align:center;
+	text-decoration: none;
+	cursor:hand;
+	text-decoration : none;
+}
+
+a.s-datePick-OtherMonthCurr, td.s-datePick-OtherMonthCurr {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:xx-small;
+	font-weight:normal;
+	color:#eeeeee;
+	text-align:center;
+	cursor:hand;
+	border-style:dotted;
+	border-width:1px;
+	border-color:black;
+	vertical-align:middle;
+}
+
+a.s-datePick-OtherMonthCurr-ns, td.s-datePick-OtherMonthCurr-ns {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:small;
+	font-weight:normal;
+	color: Green;
+	text-align:center;
+	cursor:hand;
+	border-style:dotted;
+	border-width:1px;
+	border-color:black;
+	vertical-align:middle;
+}
+
+a.s-datePick-CurrMonthCurr, td.s-datePick-CurrMonthCurr {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:xx-small;
+	font-weight:normal;
+	color:#003366;
+	text-align:center;
+	cursor:hand;
+	border-style:dotted;
+	border-width:1px;
+	border-color:black;
+	vertical-align:middle;
+}
+
+a.s-datePick-CurrMonthCurr-ns, td.s-datePick-CurrMonthCurr-ns {
+	font-family:Verdana,Arial,Helvetica;
+	font-size:small;
+	font-weight:normal;
+	color: Green;
+	text-align:center;
+	cursor:hand;
+	border-style:dotted;
+	border-width:1px;
+	border-color:black;
+	vertical-align:middle;
+}
+
+.s-textField {
+	text-align:center;
+	padding-bottom: 1%;
+	font-family: Verdana, Arial, sans-serif; 
+	font-size: 10pt; 
+	font-color:000000; 
+}
+
+.s-dropdown-btn {
+	font-size:small; height:1.45em; width:1.2em;
+	background-repeat:no-repeat;background-position:center;
+	background-image:url(../Imagenes/DNDown.gif);
+}
+
+
+.popup {
+visibility:hidden; 
+position:absolute;
+overflow:visible;
+z-index:10;
+width:600px;
+height:100px;
+background-image:url(../Imagenes/fondo_claro.jpg);
+border-color:black;
+}
+
+
+INPUT {font-family:sans-serif;font-size:small;height:1.4em;}
+LABEL {font-family:sans-serif;font-size:small;height:1.0em;}

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnalisisPorEstatusExcel" pageWidth="612" pageHeight="5669306" whenNoDataType="NoPages" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="a5831dd6-9e2f-479b-9a38-48bcc3c92427">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<parameter name="REPORTE_FECHA_RANGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ID_REPORTE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="STR_AREA" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="AREA_USUARIO" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT REP_DESCRIPCION, REP_AREA, REP_TIPO_DOCTO, REP_RECEPCION, 
+REP_TURNADO, REP_TERMINADO, REP_FECHA_CREACION, 
+REP_MIN_PLAN AS TURNADO_VENCIDAS, REP_MAX_PLAN AS TERMINADO_VENCIDAS 
+FROM SD_REPORTES 
+WHERE ID_REPORTE=$P{ID_REPORTE}]]>
+	</queryString>
+	<field name="REP_DESCRIPCION" class="java.lang.String"/>
+	<field name="REP_AREA" class="java.lang.String"/>
+	<field name="REP_TIPO_DOCTO" class="java.lang.String"/>
+	<field name="REP_RECEPCION" class="java.math.BigDecimal"/>
+	<field name="REP_TURNADO" class="java.math.BigDecimal"/>
+	<field name="REP_TERMINADO" class="java.math.BigDecimal"/>
+	<field name="REP_FECHA_CREACION" class="oracle.sql.TIMESTAMP"/>
+	<field name="TURNADO_VENCIDAS" class="java.math.BigDecimal"/>
+	<field name="TERMINADO_VENCIDAS" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" mode="Transparent" x="0" y="0" width="552" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="54889227-a016-4dc9-a908-5aed87526494"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Análisis por Estatus]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="4" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="87" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-1" mode="Transparent" x="264" y="0" width="288" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="f278a0fd-6d98-42b4-936b-822a18692e37"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORTE_FECHA_RANGO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-3" mode="Transparent" x="0" y="27" width="234" height="60" forecolor="#000000" backcolor="#FFFFFF" uuid="cc3de64a-12ca-4e5d-9abf-38444a1b5821"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Tipo de Decumento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Transparent" x="234" y="47" width="159" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c5f6cfc5-8dcc-4a0d-b946-7a729f6c365e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[En Tramite]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" mode="Transparent" x="393" y="47" width="159" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="e1a1990e-ff01-4ca7-aa02-fc202322c87a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Terminado]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-2" mode="Transparent" x="0" y="0" width="264" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="b34373b6-6a17-46f9-bb16-e8741d857c3e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AREA_USUARIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-8" mode="Transparent" x="234" y="27" width="318" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="191fe501-5160-4bdc-8e55-d1aa100ec428"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" mode="Transparent" x="234" y="67" width="79" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="6407a720-2cfa-4f00-8b71-6cdd91a12051"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[No Vencidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-10" mode="Transparent" x="313" y="67" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f00aaea5-f0ee-476d-ab08-c743ff0b5646"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Vencidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-11" mode="Transparent" x="393" y="67" width="79" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9a30904e-38fd-4c72-9d9c-c8abbb4ed2f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[No Vencidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-12" mode="Transparent" x="472" y="67" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8b0deae3-480f-4788-a159-59662876d302"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Vencidas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-3" mode="Transparent" x="0" y="0" width="234" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="b04a7a92-f76f-4585-82bb-3f213178cd18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REP_TIPO_DOCTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-4" mode="Transparent" x="234" y="0" width="79" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="baf4c41c-9e89-4075-b45c-16155834a440"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REP_TURNADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-6" mode="Transparent" x="313" y="0" width="80" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="4b172978-6f0c-4720-ad6f-23680103b551"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TURNADO_VENCIDAS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-7" mode="Transparent" x="393" y="0" width="79" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="9d764a72-fdb2-4596-bf58-6e9f2065809e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REP_TERMINADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-8" mode="Transparent" x="472" y="0" width="80" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="74b654fc-3ecd-4ba8-a14f-8b78582801cd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TERMINADO_VENCIDAS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="5" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="5" splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band height="591" splitType="Stretch">
+			<bar3DChart>
+				<chart isShowLegend="true">
+					<reportElement key="element-1" x="0" y="31" width="552" height="263" uuid="865fe020-c13e-4142-b7c1-2176b233e6ed"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend textColor="#000000" backgroundColor="#FFFFFF"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{REP_TIPO_DOCTO}==null?"":$F{REP_TIPO_DOCTO}]]></seriesExpression>
+						<categoryExpression><![CDATA["No Vencidas"]]></categoryExpression>
+						<valueExpression><![CDATA[$F{REP_TURNADO}==null?0.0:$F{REP_TURNADO}]]></valueExpression>
+						<labelExpression><![CDATA[$F{REP_AREA}==null?"":$F{REP_AREA}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{REP_TIPO_DOCTO}==null?"":$F{REP_TIPO_DOCTO}]]></seriesExpression>
+						<categoryExpression><![CDATA["Vencidas"]]></categoryExpression>
+						<valueExpression><![CDATA[$F{TURNADO_VENCIDAS}==null?0.0:$F{TURNADO_VENCIDAS}]]></valueExpression>
+						<labelExpression><![CDATA[""]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot isShowLabels="false" xOffset="12.0" yOffset="8.0">
+					<plot backgroundAlpha="1.0" foregroundAlpha="1.0" labelRotation="0.0"/>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="0.0">
+						<axisFormat axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<staticText>
+				<reportElement key="staticText-13" mode="Transparent" x="0" y="12" width="552" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="59fa01f3-b263-4d44-bcc7-cb7388e522c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Grafica de Estatus en Tramite]]></text>
+			</staticText>
+			<bar3DChart>
+				<chart isShowLegend="true">
+					<reportElement key="element-3" x="0" y="318" width="552" height="271" uuid="cf5741f8-68f0-472b-937a-11b182e6445b"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend textColor="#000000" backgroundColor="#FFFFFF"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{REP_TIPO_DOCTO}==null?"":$F{REP_TIPO_DOCTO}]]></seriesExpression>
+						<categoryExpression><![CDATA["No Vencidas"]]></categoryExpression>
+						<valueExpression><![CDATA[$F{REP_TERMINADO}==null?0.0:$F{REP_TERMINADO}]]></valueExpression>
+						<labelExpression><![CDATA[""]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{REP_TIPO_DOCTO}==null?"":$F{REP_TIPO_DOCTO}]]></seriesExpression>
+						<categoryExpression><![CDATA["Vencidas"]]></categoryExpression>
+						<valueExpression><![CDATA[$F{TERMINADO_VENCIDAS}==null?0.0:$F{TERMINADO_VENCIDAS}]]></valueExpression>
+						<labelExpression><![CDATA[""]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot isShowLabels="false" xOffset="12.0" yOffset="8.0">
+					<plot backgroundAlpha="1.0" foregroundAlpha="1.0" labelRotation="0.0"/>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="0.0">
+						<axisFormat axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<staticText>
+				<reportElement key="staticText-15" mode="Transparent" x="0" y="299" width="552" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="7736df3c-e270-488d-a161-64dc37260267"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Grafica de Estatus Terminado]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

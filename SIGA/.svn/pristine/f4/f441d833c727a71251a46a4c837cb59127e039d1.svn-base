@@ -1,0 +1,20 @@
+<html>
+<body>
+<h2>Rastreo de Asuntos</h2>
+
+<applet Archive='lib/jgraph.jar,lib/jgraphlayout.jar' code="DiagramaAsuntos.class"
+        WIDTH='1000' HEIGHT='800' ALIGN='BOTTOM'>
+<param name="elementos" value="9">
+<param name="inicio" value="OM2-OOM-00002">
+<param name="masViejo" value="RCGTIC-OFI-00356XXXXXXXX,RCGTIC-OFI-00355">
+<param name="conPermiso" value="RCGTIC-OFI-00352,RCGTIC-OFI-00356XXXXXXXX">
+<param name="nombres" value="RCGTIC-OFI-00356XXXXXXXX,RCGTIC-OFI-00355,RCGTIC-OFI-00352,RCGTIC-OFI-00351,OM2-OOM-00002">
+<param name="relaciones" value="OM2-OOM-00002@RCGTIC-OFI-00352@Respuesta@P,RCGTIC-OFI-00355@RCGTIC-OFI-00356XXXXXXXX@Referencia@H,RCGTIC-OFI-00355@RCGTIC-OFI-00351@Respuesta@P,RCGTIC-OFI-00352@RCGTIC-OFI-00355@Referencia@H">
+<param name="urlDetalle" value="http://www.yahoo.com">
+<param name="urlRuta" value="http://catvirda1151.hacienda.ad.gob.mx/PruebasAOA/JSP/AsuntosRelacionados.jsp">
+<param name="w" value="120">
+<param name="h" value="30">
+</applet>
+</body>
+</html>
+    

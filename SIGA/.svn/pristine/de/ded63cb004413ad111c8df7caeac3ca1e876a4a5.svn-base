@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inst_terminado_01" pageWidth="792" pageHeight="5669280" whenNoDataType="NoPages" columnWidth="732" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="b448da94-efb8-4165-8423-113cd387e744">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="USU_NOMBRE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="USU_PUESTO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ID_USUARIO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="AREA_NOMBRE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="USU_AREA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["16"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ID_REMITENTE" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT ID_INSTRUCCION_ASUNTO, INS_INSTRUCCION, 
+(SELECT INS_NOMBRE FROM SD_INSTRUCCION WHERE ID_INSTRUCCION=INS_INSTRUCCION) AS INS_INSNOMBRE,
+CASE ASU_ESTATUS 
+	WHEN 0 THEN 'En Recepción' 
+	WHEN 1 THEN 'Por Turnar' 
+	WHEN 2 THEN 'En Tramite' 
+	WHEN 3 THEN 'Terminada' 
+END AS ESTATUS,
+TO_CHAR(INS_FECHA_ASIGNACION, 'yyyy-MM-dd') INS_FECHA_ASIGNACION_CHAR, 
+TO_CHAR(INS_FECHA_TERMINACION, 'yyyy-MM-dd') INS_FECHA_TERMINACION_CHAR, 
+INS_ESTATUS, ASU_FOLIO_RECEPCION, ASU_DESCRIPCION,
+INS_INSTRUCCION_OTRO, INS_TIEMPO, INS_AVANCE, 
+INS_USUARIO, USU_ASISTENTE, USU_JEFE, INS_HABILITADA, 
+TO_CHAR(INS_FECHA_TERMINACION_REAL, 'yyyy-MM-dd') INS_FECHA_TERMINACION_REAL_CHAR, 
+INS_CONFIDENCIAL, INS_TURNO, INS_PADRE, INS_FECHA_ASIGNACION 
+FROM SD_INSTRUCCION_ASUNTO, SD_USUARIO, 
+SD_ASUNTO WHERE INS_USUARIO=$P{ID_REMITENTE} AND 
+SD_ASUNTO.ID_ASUNTO=SD_INSTRUCCION_ASUNTO.ID_ASUNTO 
+AND SD_USUARIO.ID_USUARIO=SD_INSTRUCCION_ASUNTO.INS_USUARIO 
+AND INS_ESTATUS=4 AND INS_BANDERA1=0 
+ORDER BY ASU_FOLIO_RECEPCION ASC]]>
+	</queryString>
+	<field name="ID_INSTRUCCION_ASUNTO" class="java.math.BigDecimal"/>
+	<field name="INS_INSTRUCCION" class="java.math.BigDecimal"/>
+	<field name="INS_INSNOMBRE" class="java.lang.String"/>
+	<field name="ESTATUS" class="java.lang.String"/>
+	<field name="INS_FECHA_ASIGNACION_CHAR" class="java.lang.String"/>
+	<field name="INS_FECHA_TERMINACION_CHAR" class="java.lang.String"/>
+	<field name="INS_ESTATUS" class="java.math.BigDecimal"/>
+	<field name="ASU_FOLIO_RECEPCION" class="java.lang.String"/>
+	<field name="ASU_DESCRIPCION" class="java.lang.String"/>
+	<field name="INS_INSTRUCCION_OTRO" class="java.lang.String"/>
+	<field name="INS_TIEMPO" class="java.math.BigDecimal"/>
+	<field name="INS_AVANCE" class="java.math.BigDecimal"/>
+	<field name="INS_USUARIO" class="java.math.BigDecimal"/>
+	<field name="USU_ASISTENTE" class="java.math.BigDecimal"/>
+	<field name="USU_JEFE" class="java.math.BigDecimal"/>
+	<field name="INS_HABILITADA" class="java.math.BigDecimal"/>
+	<field name="INS_FECHA_TERMINACION_REAL_CHAR" class="java.lang.String"/>
+	<field name="INS_CONFIDENCIAL" class="java.math.BigDecimal"/>
+	<field name="INS_TURNO" class="java.math.BigDecimal"/>
+	<field name="INS_PADRE" class="java.math.BigDecimal"/>
+	<field name="INS_FECHA_ASIGNACION" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" mode="Transparent" x="0" y="15" width="732" height="46" forecolor="#000000" backcolor="#FFFFFF" uuid="92b99a29-9b29-4c2a-9860-8f1f10197b7a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[SECRETARIA DE HACIENDA Y CRÉDITO PÚBLICO
+INSTRUCCIONES TERMINADAS]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="0" y="61" width="732" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="ccf15eab-6ce6-4ca0-9d7b-b197a9006079"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{USU_PUESTO}+" -- "+$P{USU_NOMBRE}+"\nUnidad Administrativa: "+$P{AREA_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-1" mode="Transparent" x="0" y="0" width="732" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="606a96be-97e5-47c9-b185-a8d7a20e3598"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-2" mode="Transparent" x="0" y="0" width="191" height="34" forecolor="#000000" backcolor="#FFFFFF" uuid="a74f12e6-db24-4b3e-838e-3d43f6a9f200"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FOLIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" mode="Transparent" x="191" y="0" width="191" height="34" forecolor="#000000" backcolor="#FFFFFF" uuid="fa4c42b1-ae93-429c-976a-522cc4f52f1e"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ASUNTO (INSTRUCCIÓN)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" mode="Transparent" x="382" y="0" width="241" height="34" forecolor="#000000" backcolor="#FFFFFF" uuid="23c64e17-a282-4a28-a161-305cd7a9a0d0"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[RECIBIDO / VENCIMIENTO / CONCLUIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" mode="Transparent" x="623" y="0" width="109" height="34" forecolor="#000000" backcolor="#FFFFFF" uuid="5a5bfc27-3720-48e9-806f-93a2815226f5"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ESTATUS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="0" width="191" height="44" uuid="fa255812-f750-4fd9-ba4f-16fe65f0c64d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASU_FOLIO_RECEPCION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="191" y="0" width="191" height="21" uuid="1c8f241e-3207-42f7-a027-20a56e7dc3f9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASU_DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="382" y="0" width="241" height="44" uuid="fe407426-da8c-427c-b2f4-3539f268584f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{INS_FECHA_ASIGNACION_CHAR}+" -- "+$F{INS_FECHA_TERMINACION_CHAR}+" -- "+$F{INS_FECHA_TERMINACION_REAL_CHAR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="623" y="0" width="109" height="44" uuid="98a35d4c-add4-4f92-93d3-3105d929221a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ESTATUS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-6" x="191" y="21" width="191" height="23" uuid="8684e8aa-d9b9-4866-ac05-889918d6b0c4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{INS_INSTRUCCION}==null ? $F{INS_INSTRUCCION_OTRO}:$F{INS_INSNOMBRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

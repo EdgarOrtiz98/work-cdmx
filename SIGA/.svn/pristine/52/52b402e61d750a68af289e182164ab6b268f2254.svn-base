@@ -1,0 +1,492 @@
+package _jsp;
+
+import oracle.jsp.runtime.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.jsp.*;
+import oracle.jsp.el.*;
+import javax.servlet.jsp.el.*;
+import com.meve.sigma.actualiza.*;
+import com.meve.sigma.beans.*;
+import java.util.*;
+
+
+public class _ExpedienteArchview extends com.orionserver.http.OrionHttpJspPage {
+
+
+  // ** Begin Declarations
+
+
+	public static boolean par(int num)
+    {
+        boolean p = false;
+        if (num % 2 == 0) 
+        {
+            p = true;
+        }    
+        return p;
+    }
+
+  // ** End Declarations
+
+  public void _jspService(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException, ServletException {
+
+    response.setContentType( "text/html; charset=ISO-8859-1");
+    /* set up the intrinsic variables using the pageContext goober:
+    ** session = HttpSession
+    ** application = ServletContext
+    ** out = JspWriter
+    ** page = this
+    ** config = ServletConfig
+    ** all session/app beans declared in globals.jsa
+    */
+    PageContext pageContext = JspFactory.getDefaultFactory().getPageContext( this, request, response, null, true, JspWriter.DEFAULT_BUFFER, true);
+    // Note: this is not emitted if the session directive == false
+    HttpSession session = pageContext.getSession();
+    int __jsp_tag_starteval;
+    ServletContext application = pageContext.getServletContext();
+    JspWriter out = pageContext.getOut();
+    _ExpedienteArchview page = this;
+    ServletConfig config = pageContext.getServletConfig();
+    javax.servlet.jsp.el.VariableResolver __ojsp_varRes = (VariableResolver)new OracleVariableResolverImpl(pageContext);
+
+    try {
+
+
+      out.write(__oracle_jsp_text[0]);
+      {
+        String __url=OracleJspRuntime.toStr("headerC.jsp");
+        // Include 
+        pageContext.include( __url,false);
+        if (pageContext.getAttribute(OracleJspRuntime.JSP_REQUEST_REDIRECTED, PageContext.REQUEST_SCOPE) != null) return;
+      }
+
+      out.write(__oracle_jsp_text[1]);
+      out.write(__oracle_jsp_text[2]);
+      out.write(__oracle_jsp_text[3]);
+      
+      	UsuarioBean BUsuario = (UsuarioBean)session.getAttribute("UsuarioBean");
+      	String strTmp=request.getRequestURI();
+      	String 	cat	= BUsuario.getCatArchivado();
+      	strTmp=strTmp.substring(strTmp.indexOf('/',2)+5,strTmp.length());    
+      	if(BUsuario==null){
+      		try{
+      			response.sendRedirect("index.jsp?pagina="+ strTmp); 
+      		}
+      		catch(java.io.IOException io){
+      			//System.out.println("ERROR:"+io.getMessage());
+      		}
+      	}
+      
+      out.write(__oracle_jsp_text[4]);
+       if(	(BUsuario.getAtencion() && !BUsuario.getSupervisor()) || 
+      		(BUsuario.getGestion() && !BUsuario.getSupervisor()) ||
+      		(BUsuario.getRecepcion() && !BUsuario.getSupervisor()) || 
+      		(BUsuario.getTurnado() && !BUsuario.getSupervisor()) ||
+      		(BUsuario.getAsistente() && !BUsuario.getSupervisor())){ 
+      out.write(__oracle_jsp_text[5]);
+      if (true) {
+        String __url=OracleJspRuntime.toStr("../Error/ERUsuarioInvalido.jsp");
+        // Forward 
+        pageContext.forward( __url);
+        return;
+      }
+
+      out.write(__oracle_jsp_text[6]);
+       } 
+      out.write(__oracle_jsp_text[7]);
+      
+      	boolean bExiste			=	false;
+      	boolean bOperacion		=	false;
+      	int bOperacion1		=	0;
+      	String strIds_Borrar[]	=	null;
+      	String strAccion		=	"";
+      	String msg				=	request.getParameter("msg");
+      	int t = 0;
+      	strAccion				=	request.getParameter("accion");
+      	strIds_Borrar			=	request.getParameterValues("Borrar");
+      
+      	bExiste					=	ActualizaExpArchivado.getExisteExped();	
+      
+      	int contPag 	= Integer.parseInt((request.getParameter("contPag")!=null)?request.getParameter("contPag"):"0");
+      	int contligas 	= Integer.parseInt((request.getParameter("contligas")!=null)?request.getParameter("contligas"):"0");
+      	int regPorPagina = 20;
+      	int muestraPaginas = 20;
+      	String[][] strConfig = ActualizaConfiguracion.getDatosConf();
+      	if(strConfig != null && strConfig.length > 0){
+      		regPorPagina 	= Integer.parseInt(strConfig[0][3]);
+      		muestraPaginas 	= Integer.parseInt(strConfig[0][4]);
+      	}
+      	int numRegistros = 0;
+      	int numPaginas = 0;
+      
+      	if(strAccion!=null && strAccion.trim().length()>0 && strAccion.equals("borrar"))
+      	{
+      			bOperacion1	=	ActualizaExpArchivado.getDeleteExp(strIds_Borrar,BUsuario.getIdUsuario());
+      			if(bOperacion1 == 2)
+      			{
+      			msg ="Existen registros asociados, el proceso de borrado no fue exitoso";
+      			}	
+      	}
+      	String strOrden = (request.getParameter("orden")!=null)?request.getParameter("orden"):"asc";
+      	String strTipo = (request.getParameter("tipo")!=null)?request.getParameter("tipo"):"1";
+      
+      	numRegistros = 0;
+      	Vector vRegistros = new Vector();
+      	String[][] sqlVec = ActualizaExpArchivado.getDatosExpediente(strOrden, strTipo);
+      	if (sqlVec!=null && sqlVec.length>0){
+      		for (int ix=0; ix<sqlVec.length; ix++){
+      			if(BUsuario.getAdmon() || sqlVec[ix][5].equals(BUsuario.getIdArea())){ 
+      				numRegistros++;
+      				vRegistros.addElement(sqlVec[ix]);
+      			}
+      		}
+      	}
+      
+      out.write(__oracle_jsp_text[8]);
+      out.write(__oracle_jsp_text[9]);
+      if(msg!= null && msg.trim().length()>0)
+      		{
+      		
+      out.write(__oracle_jsp_text[10]);
+      out.print(msg);
+      out.write(__oracle_jsp_text[11]);
+      
+      		}
+      		
+      out.write(__oracle_jsp_text[12]);
+      out.print( strOrden );
+      out.write(__oracle_jsp_text[13]);
+      out.print( strTipo );
+      out.write(__oracle_jsp_text[14]);
+      out.print( contPag );
+      out.write(__oracle_jsp_text[15]);
+      out.print( contligas );
+      out.write(__oracle_jsp_text[16]);
+      out.print( com.meve.sigma.util.Utilerias.codificaPostHTML(strTmp+"?orden="+strOrden+"&tipo="+strTipo+"&contPag="+contPag+"&contligas="+contligas) );
+      out.write(__oracle_jsp_text[17]);
+      	//numRegistros = ActualizaExpArchivado.getDatosExpediente(strOrden, strTipo).length; 
+      out.write(__oracle_jsp_text[18]);
+      	numPaginas = numRegistros/regPorPagina;	
+      			if (numRegistros%regPorPagina != 0)
+      				numPaginas++; 
+      out.write(__oracle_jsp_text[19]);
+      	if (numRegistros > 0){	
+      out.write(__oracle_jsp_text[20]);
+      out.print( numRegistros );
+      out.write(__oracle_jsp_text[21]);
+      	} 
+      out.write(__oracle_jsp_text[22]);
+      	if (numPaginas > 1){	
+      out.write(__oracle_jsp_text[23]);
+      out.print( contPag+1 );
+      out.write(__oracle_jsp_text[24]);
+      out.print( numPaginas );
+      out.write(__oracle_jsp_text[25]);
+       	} 
+      out.write(__oracle_jsp_text[26]);
+       if(bExiste){ 
+      out.write(__oracle_jsp_text[27]);
+       t=0; 
+      out.write(__oracle_jsp_text[28]);
+      	String[][] sql = ActualizaExpArchivado.getDatosExpediente(strOrden, strTipo);
+      			for (int i=contPag*regPorPagina; i<sql.length && i<(contPag+1)*regPorPagina; i++){
+      				String campo1 = sql[i][0];
+      				String campo2 = sql[i][1];
+      				String campo3 = sql[i][2];
+      				String campo4 = sql[i][3];
+      				String campo5 = sql[i][4];
+      				String campo6 = sql[i][5];
+      				String campo7 = sql[i][6];
+      		
+      out.write(__oracle_jsp_text[29]);
+       if (BUsuario.getAdmon() || campo6.equals(BUsuario.getIdArea()) || cat.equalsIgnoreCase("1")){ 
+      out.write(__oracle_jsp_text[30]);
+       t++; 
+      out.write(__oracle_jsp_text[31]);
+      if(par(t)==true){
+      }else{
+      out.write(__oracle_jsp_text[32]);
+      }
+      out.write(__oracle_jsp_text[33]);
+      out.print( campo1 );
+      out.write(__oracle_jsp_text[34]);
+      out.print( campo1 );
+      out.write(__oracle_jsp_text[35]);
+      out.print( com.meve.sigma.util.Utilerias.codificaPostHTML(strTmp+"?orden="+strOrden+"&tipo="+strTipo+"&contPag="+contPag+"&contligas="+contligas) );
+      out.write(__oracle_jsp_text[36]);
+      out.print(campo4);
+      out.write(__oracle_jsp_text[37]);
+      out.print(campo7);
+      out.write(__oracle_jsp_text[38]);
+      out.print(campo7);
+      out.write(__oracle_jsp_text[39]);
+      out.print(campo2);
+      out.write(__oracle_jsp_text[40]);
+      out.print(campo2);
+      out.write(__oracle_jsp_text[41]);
+      out.print(campo3);
+      out.write(__oracle_jsp_text[42]);
+      out.print(campo3);
+      out.write(__oracle_jsp_text[43]);
+      out.print(campo5);
+      out.write(__oracle_jsp_text[44]);
+       } 
+      out.write(__oracle_jsp_text[45]);
+       } 
+      out.write(__oracle_jsp_text[46]);
+       if (t==0){ 
+      out.write(__oracle_jsp_text[47]);
+       }else{ 
+      out.write(__oracle_jsp_text[48]);
+      
+      			if (contligas>0 && numPaginas > muestraPaginas){  
+      out.write(__oracle_jsp_text[49]);
+      out.print( (contligas-muestraPaginas<0)?0:contligas-muestraPaginas );
+      out.write(__oracle_jsp_text[50]);
+      out.print( (contligas-muestraPaginas<0)?0:contligas-muestraPaginas );
+      out.write(__oracle_jsp_text[51]);
+      	}
+      			if (contPag > 0){  
+      				if (contPag > contligas){
+      out.write(__oracle_jsp_text[52]);
+      out.print(contligas);
+      out.write(__oracle_jsp_text[53]);
+      out.print(contPag-1);
+      out.write(__oracle_jsp_text[54]);
+      	}else{
+      out.write(__oracle_jsp_text[55]);
+      out.print(contligas-1);
+      out.write(__oracle_jsp_text[56]);
+      out.print(contPag-1);
+      out.write(__oracle_jsp_text[57]);
+      	} 
+      			}
+      			if (numPaginas > 1){
+      				for (int i=contligas; i<muestraPaginas+contligas && i<numPaginas; i++){ 
+      					if (i==contPag){  
+      out.write(__oracle_jsp_text[58]);
+      out.print(i);
+      out.write(__oracle_jsp_text[59]);
+      out.print(i+1);
+      out.write(__oracle_jsp_text[60]);
+      		}else{ 
+      out.write(__oracle_jsp_text[61]);
+      out.print(i);
+      out.write(__oracle_jsp_text[62]);
+      out.print(i+1);
+      out.write(__oracle_jsp_text[63]);
+      		}
+      				}
+      			} 
+      			if (contPag < numPaginas-1){  
+      				if (contPag < contligas + muestraPaginas-1){
+      out.write(__oracle_jsp_text[64]);
+      out.print(contligas);
+      out.write(__oracle_jsp_text[65]);
+      out.print(contPag+1);
+      out.write(__oracle_jsp_text[66]);
+      	}else{
+      out.write(__oracle_jsp_text[67]);
+      out.print(contligas+1);
+      out.write(__oracle_jsp_text[68]);
+      out.print(contPag+1);
+      out.write(__oracle_jsp_text[69]);
+      	} 
+      			}
+      			if (contligas+muestraPaginas<numPaginas && numPaginas > muestraPaginas){  
+      out.write(__oracle_jsp_text[70]);
+      out.print( contligas+muestraPaginas );
+      out.write(__oracle_jsp_text[71]);
+      out.print( contligas+muestraPaginas );
+      out.write(__oracle_jsp_text[72]);
+      	
+      			} 
+      out.write(__oracle_jsp_text[73]);
+       } 
+      out.write(__oracle_jsp_text[74]);
+       } else { 
+      out.write(__oracle_jsp_text[75]);
+       } 
+      out.write(__oracle_jsp_text[76]);
+
+    }
+    catch (Throwable e) {
+      if (!(e instanceof javax.servlet.jsp.SkipPageException)){
+        try {
+          if (out != null) out.clear();
+        }
+        catch (Exception clearException) {
+        }
+        pageContext.handlePageException(e);
+      }
+    }
+    finally {
+      OracleJspRuntime.extraHandlePCFinally(pageContext, true);
+      JspFactory.getDefaultFactory().releasePageContext(pageContext);
+    }
+
+  }
+  private static final char __oracle_jsp_text[][]=new char[77][];
+  static {
+    try {
+    __oracle_jsp_text[0] = 
+    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n".toCharArray();
+    __oracle_jsp_text[1] = 
+    "\n<HTML>\n<HEAD>\n".toCharArray();
+    __oracle_jsp_text[2] = 
+    "\n".toCharArray();
+    __oracle_jsp_text[3] = 
+    "\n".toCharArray();
+    __oracle_jsp_text[4] = 
+    "\n".toCharArray();
+    __oracle_jsp_text[5] = 
+    "\n".toCharArray();
+    __oracle_jsp_text[6] = 
+    "\n".toCharArray();
+    __oracle_jsp_text[7] = 
+    "\n".toCharArray();
+    __oracle_jsp_text[8] = 
+    "\n".toCharArray();
+    __oracle_jsp_text[9] = 
+    "\n<META http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\n<META name=\"GENERATOR\" content=\"IBM Software Development Platform\">\n<META http-equiv=\"Content-Style-Type\" content=\"text/css\">\n<LINK href=\"../theme/Master.css\" rel=\"stylesheet\" type=\"text/css\">\n<LINK href=\"../css/calendar.css\" rel=\"stylesheet\" type=\"text/css\">\n<LINK href=\"../css/menu.css\" rel=\"stylesheet\" type=\"text/css\">\n<TITLE>Expedientes</TITLE>\n<SCRIPT language=\"JavaScript\" src=\"../js/GeneralFunctions.js\"></SCRIPT>\n<script language=\"JavaScript\" type=\"text/javascript\">\n\tfunction cambio(o, t){\n\t\tdoc = document.expview;\n\t\tdoc.accion.value=\"reload\";\n\t\tdoc.orden.value=o;\n\t\tdoc.tipo.value=t;\n\t\tdoc.submit();\n\t}\n\t\tfunction validaReg() { \n\t\t".toCharArray();
+    __oracle_jsp_text[10] = 
+    "\n\t\talert(\"".toCharArray();
+    __oracle_jsp_text[11] = 
+    "\");\n\t\t".toCharArray();
+    __oracle_jsp_text[12] = 
+    "\n\t}\nfunction pagina(contador){\n\tdoc = document.expview;\n\tdoc.contPag.value=contador;\n\tdoc.submit();\n}\n\nfunction paginaLiga(contador){\n\tdoc = document.expview;\n\tdoc.contligas.value=contador;\n\tdoc.submit();\n}\n</script>\n<STYLE type=text/css>\n\tBODY {\n\t\tmargin: 0px;\n\t}\n</STYLE>\n</HEAD>\n<BODY background=\"../Imagenes/fondo_claro.jpg\" onload=\"validaReg();timer_load();\" \n\tonKeyPress=\"timer_reload();\" \n\tonClick=\"timer_reload();\">\n<span id=\"ruler\" style=\"visibility:hidden;\"></span> \n<FORM action=\"ExpedienteArchview.jsp\" name=\"expview\" method=\"post\">\n<INPUT type=\"hidden\" name=\"accion\" value=\"\">\n<INPUT type=\"hidden\" name=\"orden\" value=\"".toCharArray();
+    __oracle_jsp_text[13] = 
+    "\">\n<INPUT type=\"hidden\" name=\"tipo\" value=\"".toCharArray();
+    __oracle_jsp_text[14] = 
+    "\">\n<INPUT type=\"hidden\" value=\"".toCharArray();
+    __oracle_jsp_text[15] = 
+    "\" name=\"contPag\">\n<INPUT type=\"hidden\" value=\"".toCharArray();
+    __oracle_jsp_text[16] = 
+    "\" name=\"contligas\">\n<TABLE cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">\n<TBODY>\n\t<TR valign=\"top\">\n\t\t<TD width=\"100%\" colspan=\"2\"></TD>\n    </TR>\n</TABLE>\n<TABLE cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">\n<TBODY>\n\t<TR valign=\"top\">\n\t\t<TD width=\"43%\">\n\t\t\t<A href=\"Archivado.jsp\">\n\t\t\t<IMG border=\"0\" alt=\"Regresar\" src=\"../Imagenes/NavLeft.gif\" width=\"30\" height=\"27\">\n\t\t\t</A>\n\t\t\t<A href=\"ExpedienteArch.jsp?retURI=".toCharArray();
+    __oracle_jsp_text[17] = 
+    "\">\n\t\t\t\t<IMG height=\"26\" alt=\"Agregar Expediente\" src=\"../Imagenes/nuevo1.gif\" width=\"27\" border=\"0\"></A>\n\t\t\t\t<FONT face=\"Tahoma\" size=\"2\">\n\t\t\t\t</FONT>\n\t\t\t\t<A href=\"javascript:Borrar()\">\n\t\t\t\t<IMG border=\"0\" alt=\"Borrar Expediente\" src=\"../Imagenes/borrar1.gif\" width=\"30\" height=\"27\">\n\t\t\t\t</A>\n\t\t</TD>\n\t\t<TD width=\"57%\" align=\"right\" valign=\"middle\">\n\t\t".toCharArray();
+    __oracle_jsp_text[18] = 
+    "\n\t\t".toCharArray();
+    __oracle_jsp_text[19] = 
+    "\n\t\t".toCharArray();
+    __oracle_jsp_text[20] = 
+    "\n\t\t\t".toCharArray();
+    __oracle_jsp_text[21] = 
+    " registros mostrados.\n\t\t".toCharArray();
+    __oracle_jsp_text[22] = 
+    "\n\t\t".toCharArray();
+    __oracle_jsp_text[23] = 
+    "\n\t\t\tPagina ".toCharArray();
+    __oracle_jsp_text[24] = 
+    " de ".toCharArray();
+    __oracle_jsp_text[25] = 
+    "\n\t\t".toCharArray();
+    __oracle_jsp_text[26] = 
+    "\n\t\t\t&nbsp;&nbsp;&nbsp;&nbsp;\n        </TD>\n    </TR>\n</TBODY>\n</TABLE>\n<TABLE cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">\n<TBODY align=\"center\">\n\t<TR bgcolor=\"#00204f\">\n\t\t<TD align=\"center\" >&nbsp;\n\t\t\t\t\t<FONT size=\"2\" color=\"white\" face=\"verdana\">CATALOGO EXPEDIENTES</FONT>\n\t\t</TD>\n\t</TR>\n\t<TR valign=\"top\">\n\t\t<TD width=\"100%\" colspan=\"2\"></TD>\n    </TR>\n</TABLE>\n<TABLE width=\"100%\" border=\"0\">\n<TBODY>\n\t<TR bgcolor=\"#00204f\">\n\t\t<TD width=\"30%\" align=\"center\">\n\t\t\t<a onclick=\"cambio('asc', 1)\"><IMG border=\"0\" src=\"../Imagenes/arriba.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n\t\t\t<b><FONT size=\"2\" color=\"white\" face=\"verdana\">Clave</FONT></b>\n\t\t\t<a onclick=\"cambio('desc', 1)\"><IMG border=\"0\" src=\"../Imagenes/abajo.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n        </TD>\n       \t<TD id=\"Asunto_HD\" width=\"10%\" align=\"center\">\n\t\t\t<a onclick=\"cambio('asc', 5)\"><IMG border=\"0\" src=\"../Imagenes/arriba.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n\t\t\t<b><FONT size=\"2\" color=\"white\" face=\"verdana\">UA</FONT></b>\n\t\t\t<a onclick=\"cambio('desc', 5)\"><IMG border=\"0\" src=\"../Imagenes/abajo.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n        </TD>\n\t\t<TD id=\"Asunto_HD2\" width=\"20%\" align=\"center\">\n\t\t\t<a onclick=\"cambio('asc', 2)\"><IMG border=\"0\" src=\"../Imagenes/arriba.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n\t\t\t<b><FONT size=\"2\" color=\"white\" face=\"verdana\">Denominación</FONT></b>\n\t\t\t<a onclick=\"cambio('desc', 2)\"><IMG border=\"0\" src=\"../Imagenes/abajo.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n        </TD>\n\t\t<TD id=\"Asunto_HD3\" width=\"25%\" align=\"center\">\n\t\t\t<a onclick=\"cambio('asc', 3)\"><IMG border=\"0\" src=\"../Imagenes/arriba.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n\t\t\t<b><FONT size=\"2\" color=\"white\" face=\"verdana\">Descripción</FONT></b>\n\t\t\t<a onclick=\"cambio('desc', 3)\"><IMG border=\"0\" src=\"../Imagenes/abajo.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n        </TD>\n\t\t<TD width=\"15%\" align=\"center\">\n\t\t\t<a onclick=\"cambio('asc', 4)\"><IMG border=\"0\" src=\"../Imagenes/arriba.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n\t\t\t<b><FONT size=\"2\" color=\"white\" face=\"verdana\">Estatus</FONT></b>\n\t\t\t<a onclick=\"cambio('desc', 4)\"><IMG border=\"0\" src=\"../Imagenes/abajo.gif\" align=\"middle\" width=\"10\" height=\"10\"></a>\n        </TD>         \n    </TR>\n</TBODY>\n</TABLE>\n<DIV id=\"msg\"></DIV>\n<DIV id=\"view\">\n<TABLE width=\"100%\" border=\"0\">\n<TBODY>\n\t".toCharArray();
+    __oracle_jsp_text[27] = 
+    "\n\t".toCharArray();
+    __oracle_jsp_text[28] = 
+    "\n\t\t".toCharArray();
+    __oracle_jsp_text[29] = 
+    "\n\t".toCharArray();
+    __oracle_jsp_text[30] = 
+    "\n\t".toCharArray();
+    __oracle_jsp_text[31] = 
+    "\n\t<TR vAlign=\"middle\" ".toCharArray();
+    __oracle_jsp_text[32] = 
+    "bgcolor=\"#f6f6f6\"".toCharArray();
+    __oracle_jsp_text[33] = 
+    ">\n\t\t<TD width=\"30%\">\n    \t\t<INPUT type=checkbox value=\"".toCharArray();
+    __oracle_jsp_text[34] = 
+    "\" name=\"Borrar\">\n    \t\t<FONT face=Arial color=#000080 size=1>\n\t\t    <A href=\"ExpedienteArch.jsp?id_sub=".toCharArray();
+    __oracle_jsp_text[35] = 
+    "&retURI=".toCharArray();
+    __oracle_jsp_text[36] = 
+    "\">".toCharArray();
+    __oracle_jsp_text[37] = 
+    "</A>\n    \t\t</FONT>\n\t   \t</TD> \n\t   \t<TD width=\"10%\" align=\"center\">\n\t\t\t<FONT face=Arial color=#000080 size=1>\n\t\t\t<A title=\"".toCharArray();
+    __oracle_jsp_text[38] = 
+    "\"><script>document.write(trunc('".toCharArray();
+    __oracle_jsp_text[39] = 
+    "','Asunto_HD'));</script> </A>\n\t\t\t</FONT>\n\t\t</TD>\n\t\t<TD width=\"20%\" align=\"center\">\n\t\t\t<FONT face=Arial color=#000080 size=1>\n\t\t\t<A title=\"".toCharArray();
+    __oracle_jsp_text[40] = 
+    "\"><script> document.write(trunc('".toCharArray();
+    __oracle_jsp_text[41] = 
+    "','Asunto_HD2'));</script> </A>\n\t\t\t</FONT>\n\t\t</TD>\n\t\t<TD width=\"25%\" align=\"center\">\n\t\t\t<FONT face=Arial color=#000080 size=1>\n\t\t\t<A title=\"".toCharArray();
+    __oracle_jsp_text[42] = 
+    "\"> <script>document.write(trunc('".toCharArray();
+    __oracle_jsp_text[43] = 
+    "','Asunto_HD3'));</script> </A>\n\t\t\t</FONT>\n\t\t</TD>\n\t\t<TD width=\"15%\" align=\"center\">\n\t\t\t<FONT face=Arial color=#000080 size=1>\n\t\t\t".toCharArray();
+    __oracle_jsp_text[44] = 
+    "\n\t\t\t</FONT>\n\t\t</TD>\t\t\t\n\t</TR>\n\t".toCharArray();
+    __oracle_jsp_text[45] = 
+    "\n\t".toCharArray();
+    __oracle_jsp_text[46] = 
+    "\n\t".toCharArray();
+    __oracle_jsp_text[47] = 
+    "\n\t\t<TR> \n\t\t\t<TD width=\"100%\">\n\t\t\t\t<div align=center>\n\t\t\t\t\t<FONT face=\"verdana\" size=\"4\">******No Hay Tipos Capturados******</FONT>\n\t\t\t\t</div>\n\t\t\t</TD>\n\t\t</TR>\n\t".toCharArray();
+    __oracle_jsp_text[48] = 
+    "\n\t\t<TR>\n\t\t<TD colspan=\"5\" align=\"center\"><BR>\n\t\t".toCharArray();
+    __oracle_jsp_text[49] = 
+    "\n\t\t\t\t<A onclick=\"paginaLiga(".toCharArray();
+    __oracle_jsp_text[50] = 
+    ");pagina(".toCharArray();
+    __oracle_jsp_text[51] = 
+    ");\"> <B>&lt;&lt;Anterior | </B> </A> &nbsp;&nbsp;\n\t\t".toCharArray();
+    __oracle_jsp_text[52] = 
+    "\n\t\t\t\t\t<A onclick=\"paginaLiga(".toCharArray();
+    __oracle_jsp_text[53] = 
+    ");pagina(".toCharArray();
+    __oracle_jsp_text[54] = 
+    ");\"> <B>&lt;&lt;</B> </A> &nbsp;&nbsp;\n\t\t\t".toCharArray();
+    __oracle_jsp_text[55] = 
+    "\n\t\t\t\t\t<A onclick=\"paginaLiga(".toCharArray();
+    __oracle_jsp_text[56] = 
+    ");pagina(".toCharArray();
+    __oracle_jsp_text[57] = 
+    ");\"> <B>&lt;&lt;</B> </A> &nbsp;&nbsp;\n\t\t\t".toCharArray();
+    __oracle_jsp_text[58] = 
+    "\n\t\t\t\t\t\t<A onclick=\"pagina(".toCharArray();
+    __oracle_jsp_text[59] = 
+    ")\"><FONT color=\"red\"><B>[".toCharArray();
+    __oracle_jsp_text[60] = 
+    "]</B></FONT></A> &nbsp;\n\t\t\t".toCharArray();
+    __oracle_jsp_text[61] = 
+    "\n\t\t\t\t\t\t<A onclick=\"pagina(".toCharArray();
+    __oracle_jsp_text[62] = 
+    ")\">".toCharArray();
+    __oracle_jsp_text[63] = 
+    "</A> &nbsp;\n\t\t\t".toCharArray();
+    __oracle_jsp_text[64] = 
+    "\n\t\t\t\t\t<A onclick=\"paginaLiga(".toCharArray();
+    __oracle_jsp_text[65] = 
+    ");pagina(".toCharArray();
+    __oracle_jsp_text[66] = 
+    ");\"> &nbsp; <B>&gt;&gt;</B> </A> &nbsp;&nbsp;\n\t\t\t".toCharArray();
+    __oracle_jsp_text[67] = 
+    "\n\t\t\t\t\t<A onclick=\"paginaLiga(".toCharArray();
+    __oracle_jsp_text[68] = 
+    ");pagina(".toCharArray();
+    __oracle_jsp_text[69] = 
+    ");\"> &nbsp; <B>&gt;&gt;</B> </A> &nbsp;&nbsp;\n\t\t\t".toCharArray();
+    __oracle_jsp_text[70] = 
+    "\n\t\t\t\t<A onclick=\"paginaLiga(".toCharArray();
+    __oracle_jsp_text[71] = 
+    ");pagina(".toCharArray();
+    __oracle_jsp_text[72] = 
+    ");\"> <B> | Siguiente&gt;&gt;</B> </A>\n\t\t".toCharArray();
+    __oracle_jsp_text[73] = 
+    "\n\t\t</TD>\n\t\t</TR>\n\t".toCharArray();
+    __oracle_jsp_text[74] = 
+    "\n\t".toCharArray();
+    __oracle_jsp_text[75] = 
+    "\n\t<TR> \n\t\t<TD width=\"100%\">\n\t\t\t<div align=center>\n\t\t\t\t<FONT face=\"verdana\" size=\"4\">******No Hay Expedientes capturados******</FONT>\n\t\t\t</div>\n\t\t</TD>\n\t</TR>\n\t".toCharArray();
+    __oracle_jsp_text[76] = 
+    "\n</TBODY>\n</TABLE>\n</DIV>\n<BR>\n\n</FORM>\n</BODY>\n</HTML>".toCharArray();
+    }
+    catch (Throwable th) {
+      System.err.println(th);
+    }
+}
+}
