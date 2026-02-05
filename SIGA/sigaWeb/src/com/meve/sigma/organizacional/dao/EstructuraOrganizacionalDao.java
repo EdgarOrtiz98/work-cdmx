@@ -276,7 +276,7 @@ public class EstructuraOrganizacionalDao {
 	}
 
 	private static int getMaxUsuarioID(Connection conn) {
-		String sql = "SELECT MAX(ID_USUARIO) AS MAX_ID FROM SD_USUARIO";
+			 = "SELECT MAX(ID_USUARIO) AS MAX_ID FROM SD_USUARIO";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
